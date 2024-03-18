@@ -194,9 +194,15 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Escape insert mode' })
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines up' })
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv", { desc = 'Move selected lines down' })
+
 vim.keymap.set('n', '<leader>fm', function()
   require('conform').format()
 end, { desc = 'File Format with conform' })
+
+vim.keymap.set('n', '<leader>fe', vim.cmd.Ex, { desc = 'Go To explorer' })
+vim.keymap.set('n', '<leader>bd', '<cmd>bd<CR>', { desc = 'Delete current buffer, also explorer' })
+
+vim.keymap.set('n', '<leader>g', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -250,6 +256,22 @@ require('lazy').setup({
 
   -- This plugin is Used to train vim motions
   { 'ThePrimeagen/vim-be-good' },
+
+  -- LazyGit integration
+  {
+    'kdheepak/lazygit.nvim',
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+  },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
