@@ -199,10 +199,13 @@ vim.keymap.set('n', '<leader>fm', function()
   require('conform').format()
 end, { desc = 'File Format with conform' })
 
-vim.keymap.set('n', '<leader>fe', vim.cmd.Ex, { desc = 'Go To explorer' })
-vim.keymap.set('n', '<leader>bd', '<cmd>bd<CR>', { desc = 'Delete current buffer, also explorer' })
-
+vim.keymap.set('n', '<leader>x', '<cmd>bd<CR>', { desc = 'Delete current buffer, also explorer' })
 vim.keymap.set('n', '<leader>g', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit' })
+
+vim.keymap.set('n', '<leader>fe', function()
+  local api = require 'nvim-tree.api'
+  api.tree.toggle { path = '<args>', find_file = true, update_root = false, focus = true }
+end, { desc = 'NvimTreeToggle: Toggle explorer' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -257,6 +260,21 @@ require('lazy').setup({
   -- This plugin is Used to train vim motions
   { 'ThePrimeagen/vim-be-good' },
 
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('nvim-tree').setup {
+        view = {
+          width = 50,
+        },
+      }
+    end,
+  },
   -- LazyGit integration
   {
     'kdheepak/lazygit.nvim',
@@ -765,6 +783,8 @@ require('lazy').setup({
     end,
   },
 
+  { 'tribela/vim-transparent' },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is
@@ -818,6 +838,8 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+
+      require('mini.pairs').setup()
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
