@@ -91,7 +91,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
+
+vim.g.neovide_background_image = '/Users/josemartins/Documents/Resources/Images/minimalist cyberpunk-style.png'
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -159,6 +161,12 @@ vim.opt.scrolloff = 10
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
+
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.bo.softtabstop = 2
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
@@ -202,14 +210,32 @@ end, { desc = 'File Format with conform' })
 vim.keymap.set('n', '<leader>x', '<cmd>bd<CR>', { desc = 'Delete current buffer, also explorer' })
 vim.keymap.set('n', '<leader>g', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit' })
 
-vim.keymap.set('n', '<leader>fe', function()
-  local api = require 'nvim-tree.api'
-  api.tree.toggle { path = '<args>', find_file = true, update_root = false, focus = true }
-end, { desc = 'NvimTreeToggle: Toggle explorer' })
+vim.keymap.set('n', '<leader>fe', '<cmd>NvimTreeToggle<CR>', { desc = 'NvimTreeToggle: Toggle explorer' })
+
+vim.keymap.set('n', '<leader>tr', function()
+  require('neotest').run.run()
+  require('neotest').summary.open()
+end, { desc = 'Neotest Run nearest test' })
+
+vim.keymap.set('n', '<leader>tra', function()
+  require('neotest').run.run(vim.fn.expand '%')
+  require('neotest').summary.open()
+end, { desc = 'Neotest Run all tests in file' })
+
+vim.keymap.set('n', '<leader>tso', function()
+  require('neotest').summary.open()
+end, { desc = 'Neotest open summary' })
+
+vim.keymap.set('n', '<leader>tsc', function()
+  require('neotest').summary.close()
+end, { desc = 'Neotest close summary' })
+
+vim.keymap.set('n', '<leader>tst', function()
+  require('neotest').summary.toggle()
+end, { desc = 'Neotest toggle summary' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -256,40 +282,6 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
-
-  -- This plugin is Used to train vim motions
-  { 'ThePrimeagen/vim-be-good' },
-
-  {
-    'nvim-tree/nvim-tree.lua',
-    version = '*',
-    lazy = false,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require('nvim-tree').setup {
-        view = {
-          width = 50,
-        },
-      }
-    end,
-  },
-  -- LazyGit integration
-  {
-    'kdheepak/lazygit.nvim',
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
-    },
-    -- optional for floating window border decoration
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-  },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following lua:
@@ -783,8 +775,6 @@ require('lazy').setup({
     end,
   },
 
-  { 'tribela/vim-transparent' },
-
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is
@@ -792,6 +782,7 @@ require('lazy').setup({
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
     'ellisonleao/gruvbox.nvim',
     priority = 1000, -- make sure to load this before all the other start plugins
+    transparent = true,
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
@@ -895,7 +886,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you have a Nerd Font, set icons to an empty table which will use the
@@ -920,3 +911,12 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- function Transparent(color)
+--   color = color or 'gruvbox'
+--   vim.cmd.colorscheme(color)
+--   vim.api.nvim_set_hl(0, 'normal', { bg = 'none' })
+--   vim.api.nvim_set_hl(0, 'normalfloat', { bg = 'none' })
+-- end
+--
+-- Transparent()
