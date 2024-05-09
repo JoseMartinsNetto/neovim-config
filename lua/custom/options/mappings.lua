@@ -3,7 +3,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -38,10 +38,24 @@ vim.keymap.set('n', '<leader>fm', function()
   require('conform').format()
 end, { desc = 'File Format with conform' })
 
-vim.keymap.set('n', '<leader>x', '<cmd>bd<CR>', { desc = 'Delete current buffer, also explorer' })
+vim.keymap.set('n', '<leader>x', function()
+  local bd = require('mini.bufremove').delete
+  if vim.bo.modified then
+    local choice = vim.fn.confirm(('Save changes to %q?'):format(vim.fn.bufname()), '&Yes\n&No\n&Cancel')
+    if choice == 1 then -- Yes
+      vim.cmd.write()
+      bd(0)
+    elseif choice == 2 then -- No
+      bd(0, true)
+    end
+  else
+    bd(0)
+  end
+end, { desc = 'Delete buffer' })
+
 vim.keymap.set('n', '<leader>g', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit' })
 
-vim.keymap.set('n', '<leader>fe', '<cmd>NvimTreeToggle<CR>', { desc = 'NvimTreeToggle: Toggle explorer' })
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' })
 
 vim.keymap.set('n', '<leader>tr', function()
   require('neotest').run.run()
