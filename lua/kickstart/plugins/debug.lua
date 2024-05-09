@@ -24,6 +24,7 @@ return {
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    require('telescope').load_extension 'flutter'
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -41,6 +42,16 @@ return {
         'delve',
       },
     }
+
+    dap.adapters.dart = {
+      type = 'executable',
+      -- As of this writing, this functionality is open for review in https://github.com/flutter/flutter/pull/91802
+      command = 'flutter',
+      args = { 'debug_adapter' },
+    }
+
+    dap.configurations.dart = {}
+    require('dap.ext.vscode').load_launchjs()
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
