@@ -14,6 +14,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- local group = vim.api.nvim_create_augroup('hotReload', { clear = true })
+-- vim.api.nvim_create_autocmd('BufWritePost', {
+--   group = group,
+--   pattern = '*.dart',
+--   callback = function()
+--     local shell = os.getenv 'SHELL'
+--     if shell and shell:match 'fish' then
+--       -- Executa o comando no shell fish
+--       vim.cmd 'silent execute \'!kill -SIGUSR1 (pgrep -f "[f]lutter_tool.*run")\''
+--     else
+--       -- Executa o comando em outros shells (bash, zsh, etc.)
+--       vim.cmd 'silent execute \'!kill -SIGUSR1 $(pgrep -f "[f]lutter_tool.*run")\''
+--     end
+--   end,
+-- })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -55,18 +71,18 @@ require('lazy').setup({
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
+  -- { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --   'lewis6991/gitsigns.nvim',
+  --   opts = {
+  --     signs = {
+  --       add = { text = '+' },
+  --       change = { text = '~' },
+  --       delete = { text = '_' },
+  --       topdelete = { text = '‾' },
+  --       changedelete = { text = '~' },
+  --     },
+  --   },
+  -- },
 
   -- NOTE: Plugins can also be configured to run lua code when they are loaded.
   --
@@ -660,7 +676,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'custom.ui.ui',
 
