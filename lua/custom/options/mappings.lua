@@ -78,3 +78,9 @@ end, { desc = 'Neotest close summary' })
 vim.keymap.set('n', '<leader>tst', function()
   require('neotest').summary.toggle()
 end, { desc = 'Neotest toggle summary' })
+
+vim.keymap.set('n', '<leader>tf', function()
+  local cwd = vim.uv.cwd()
+
+  vim.cmd('ToggleTerm size=40 dir=' .. cwd .. ' direction=float name=desktop')
+end, { desc = 'Toggle terminal float' })
