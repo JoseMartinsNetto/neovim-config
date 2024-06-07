@@ -29,6 +29,7 @@ map('n', '<C-k>', '<C-w><C-k>', 'Move focus to the upper window')
 
 -- MyKeyMaps
 map('i', 'jk', '<ESC>', 'Escape insert mode')
+map('i', 'jj', '<ESC>', 'Escape insert mode')
 map('v', 'J', ":m '>+1<CR>gv=gv", 'Move selected lines up')
 map('v', 'K', ":m '>-2<CR>gv=gv", 'Move selected lines down')
 

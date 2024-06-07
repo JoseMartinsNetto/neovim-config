@@ -84,5 +84,10 @@ return {
     end,
   },
 
-  { 'goolord/alpha-nvim' },
+  {
+    'goolord/alpha-nvim',
+    config = function()
+      require('alpha').setup(require('alpha.themes.dashboard').config)
+    end,
+  },
 }

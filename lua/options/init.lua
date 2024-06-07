@@ -64,6 +64,23 @@ vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
+-- Define cursor shape for different modes
+-- Cursor settings
+-- In normal and visual modes, use a block cursor that does not blink
+vim.opt.guicursor = 'n-v-c:block'
+
+-- Configurações do cursor
+-- No modo normal e visual, usar um cursor em bloco que não pisca
+vim.opt.guicursor = 'n-v-c:block'
+
+-- No modo de inserção, usar um cursor em bloco que pisca rapidamente
+vim.opt.guicursor:append 'i:block-blinkwait20-blinkoff20-blinkon20'
+
+-- Garantir que outros modos (linha de comando, substituir) usem configurações apropriadas
+vim.opt.guicursor:append 'r-cr:hor20'
+vim.opt.guicursor:append 'ci:ver25'
+vim.opt.guicursor:append 'sm:block-blinkwait175-blinkoff150-blinkon175'
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
